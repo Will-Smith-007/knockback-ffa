@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.will_smith_007.knockback_ffa.file_config.interfaces.IDatabaseConfig
 import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
@@ -103,6 +104,22 @@ class KnockbackConfig @Inject constructor(
 
     override fun isConfiguredWorld(worldName: String): Boolean {
         return getWorlds().contains(worldName)
+    }
+
+    override fun getDeathHeight(worldName: String): Int {
+        return yamlConfiguration.getInt("$worldName.deathHeight")
+    }
+
+    override fun getWorldSpawnLocation(worldName: String): Location? {
+        val world: World = Bukkit.getWorld(worldName) ?: return null
+
+        val x: Double = yamlConfiguration.getDouble("$worldName.x")
+        val y: Double = yamlConfiguration.getDouble("$worldName.y")
+        val z: Double = yamlConfiguration.getDouble("$worldName.z")
+        val yaw: Float = yamlConfiguration.getDouble("$worldName.yaw").toFloat()
+        val pitch: Float = yamlConfiguration.getDouble("$worldName.pitch").toFloat()
+
+        return Location(world, x, y, z, yaw, pitch)
     }
 
     private fun saveFile() {

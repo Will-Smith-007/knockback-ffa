@@ -3,3 +3,7 @@ name: Knockback-FFA
 version: 1.0.0-SNAPSHOT
 api-version: 1.19
 author: Will_Smith_007
+
+commands:
+  knockback:
+    description: Set up your worlds.

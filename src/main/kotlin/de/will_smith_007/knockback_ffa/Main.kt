@@ -1,8 +1,10 @@
 package de.will_smith_007.knockback_ffa
 
 import com.google.inject.Guice
+import de.will_smith_007.knockback_ffa.commands.KnockbackFFACommand
 import de.will_smith_007.knockback_ffa.dependency_injection.InjectionModule
 import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
+import de.will_smith_007.knockback_ffa.listener.*
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.PluginCommand
@@ -15,14 +17,27 @@ class Main : JavaPlugin() {
 
     override fun onEnable() {
         injector.getInstance(KnockbackConfig::class.java)
-        logger.info("Have fun playing Knockback-FFA")
+
+        registerCommand("knockback", injector.getInstance(KnockbackFFACommand::class.java))
+
+        registerListeners(
+            injector.getInstance(PlayerConnectionListener::class.java),
+            FoodLevelChangeListener(),
+            FallDamageListener(),
+            EntitySpawnListener(),
+            injector.getInstance(EntityDamageByEntityListener::class.java),
+            injector.getInstance(PlayerMoveListener::class.java),
+            PlayerDropItemListener()
+        )
+
+        logger.info("Have fun playing Knockback-FFA!")
     }
 
     override fun onDisable() {
         logger.info("Bye!")
     }
 
-    private fun registerListeners(listeners: Array<Listener>) {
+    private fun registerListeners(vararg listeners: Listener) {
         val pluginManager = Bukkit.getPluginManager()
         for (listener in listeners) {
             pluginManager.registerEvents(listener, this)

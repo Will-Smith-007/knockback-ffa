@@ -16,4 +16,8 @@ interface IWorldConfig {
     fun getWorlds(): List<String>
 
     fun isConfiguredWorld(worldName: String): Boolean
+
+    fun getDeathHeight(worldName: String): Int
+
+    fun getWorldSpawnLocation(worldName: String): Location?
 }
