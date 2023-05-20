@@ -1,0 +1,5 @@
+sqlHost: "localhost"
+sqlPort: 3306
+sqlDatabase: "knockback_ffa"
+sqlUsername: "admin"
+sqlSecret: "SuperSecretPassword"
