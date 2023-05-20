@@ -19,7 +19,7 @@ class PlayerConnectionListener @Inject constructor(
     fun onPlayerJoin(playerJoinEvent: PlayerJoinEvent) {
         val player: Player = playerJoinEvent.player
         player.gameMode = GameMode.ADVENTURE
-        playerJoinEvent.joinMessage(Component.text("${Message.PREFIX} §e${player.name}§a joined the game!"))
+        playerJoinEvent.joinMessage(Component.text("${Message.PREFIX}§e${player.name}§a joined the game!"))
 
         kitHandler.setPlayerKit(player)
     }
@@ -27,6 +27,6 @@ class PlayerConnectionListener @Inject constructor(
     @EventHandler
     fun onPlayerQuit(playerQuitEvent: PlayerQuitEvent) {
         val player: Player = playerQuitEvent.player
-        playerQuitEvent.quitMessage(Component.text("${Message.PREFIX} §e${player.name}§c left the game."))
+        playerQuitEvent.quitMessage(Component.text("${Message.PREFIX}§e${player.name}§c left the game."))
     }
 }

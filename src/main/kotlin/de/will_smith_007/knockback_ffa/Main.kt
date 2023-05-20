@@ -27,7 +27,9 @@ class Main : JavaPlugin() {
             EntitySpawnListener(),
             injector.getInstance(EntityDamageByEntityListener::class.java),
             injector.getInstance(PlayerMoveListener::class.java),
-            PlayerDropItemListener()
+            PlayerDropItemListener(),
+            PlayerFishListener(),
+            PlayerItemDamageListener()
         )
 
         logger.info("Have fun playing Knockback-FFA!")
