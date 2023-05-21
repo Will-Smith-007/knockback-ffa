@@ -1,7 +1,7 @@
 package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
-import de.will_smith_007.knockback_ffa.GameData
+import de.will_smith_007.knockback_ffa.game_data.GameData
 import de.will_smith_007.knockback_ffa.damage_data.DamageData
 import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
 import de.will_smith_007.knockback_ffa.game_assets.GameAssets
@@ -16,7 +16,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
 
-class PlayerMoveListener @Inject constructor(
+class PlayerMoveDeathListener @Inject constructor(
     private val gameAssets: GameAssets,
     private val knockbackConfig: KnockbackConfig
 ) : Listener {

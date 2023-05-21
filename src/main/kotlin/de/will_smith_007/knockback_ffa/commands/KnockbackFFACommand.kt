@@ -22,11 +22,13 @@ class KnockbackFFACommand @Inject constructor(
     ): MutableList<String>? {
         if (!sender.hasPermission("knockback.setup")) return null
         if (args?.size == 1) {
-            return mutableListOf("setDeath", "setSpawn", "addWorld", "removeWorld")
+            return mutableListOf("setDeath", "setSpawn", "addWorld", "removeWorld", "teleport", "tp")
         } else if (args?.size == 2) {
-            val subCommand: String = args[1]
-            if (subCommand.equals("addWorld", true) ||
-                subCommand.equals("removeWorld", true)
+            val subCommand: String = args[0]
+            if (subCommand.equals("addWorld", true)
+                || subCommand.equals("removeWorld", true)
+                || subCommand.equals("teleport", true)
+                || subCommand.equals("tp", true)
             ) {
                 return mutableListOf("WorldName")
             }
@@ -36,14 +38,14 @@ class KnockbackFFACommand @Inject constructor(
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) {
-            sender.sendMessage(Component.text("${Message.PREFIX} §cYou must be a player to execute this command."))
+            sender.sendMessage(Component.text("${Message.PREFIX}§cYou must be a player to execute this command."))
             return true
         }
 
         if (!sender.hasPermission("knockback.setup")) {
             sender.sendMessage(
                 Component.text(
-                    "${Message.PREFIX} §cYou don't have permissions to execute " +
+                    "${Message.PREFIX}§cYou don't have permissions to execute " +
                             "this command"
                 )
             )
@@ -59,7 +61,7 @@ class KnockbackFFACommand @Inject constructor(
                 val worldName: String = world.name
 
                 if (!knockbackConfig.isConfiguredWorld(worldName)) {
-                    player.sendMessage(Component.text("${Message.PREFIX} §cThis world isn't configured."))
+                    player.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
                     return true
                 }
 
@@ -67,7 +69,7 @@ class KnockbackFFACommand @Inject constructor(
                 knockbackConfig.setDeathHeight(worldName, playerHeight)
                 player.sendMessage(
                     Component.text(
-                        "${Message.PREFIX} §aYou've set the death height of " +
+                        "${Message.PREFIX}§aYou've set the death height of " +
                                 "this world to §e$playerHeight§a."
                     )
                 )
@@ -76,7 +78,7 @@ class KnockbackFFACommand @Inject constructor(
                 val worldName: String = world.name
 
                 if (!knockbackConfig.isConfiguredWorld(worldName)) {
-                    player.sendMessage(Component.text("${Message.PREFIX} §cThis world isn't configured."))
+                    player.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
                     return true
                 }
 
@@ -84,19 +86,19 @@ class KnockbackFFACommand @Inject constructor(
                 knockbackConfig.setWorldSpawn(worldName, playerLocation)
                 player.sendMessage(
                     Component.text(
-                        "${Message.PREFIX} §aYou've set the world spawn for §e" +
+                        "${Message.PREFIX}§aYou've set the world spawn for §e" +
                                 "$worldName§a."
                     )
                 )
             }
         } else if (args?.size == 2) {
             val subCommand = args[0]
+            val worldName: String = args[1]
             if (subCommand.equals("addWorld", true)) {
-                val worldName: String = args[1]
                 if (knockbackConfig.isConfiguredWorld(worldName)) {
                     player.sendMessage(
                         Component.text(
-                            "${Message.PREFIX} §cThe world §e$worldName §c" +
+                            "${Message.PREFIX}§cThe world §e$worldName §c" +
                                     "already exists."
                         )
                     )
@@ -105,7 +107,7 @@ class KnockbackFFACommand @Inject constructor(
 
                 val world: World? = Bukkit.createWorld(WorldCreator(worldName))
                 if (world == null) {
-                    player.sendMessage(Component.text("${Message.PREFIX} §cCouldn't found world §e$worldName§c."))
+                    player.sendMessage(Component.text("${Message.PREFIX}§cCouldn't found world §e$worldName§c."))
                     return true
                 }
 
@@ -113,13 +115,12 @@ class KnockbackFFACommand @Inject constructor(
                 player.teleport(world.spawnLocation)
                 player.gameMode = GameMode.CREATIVE
                 player.isFlying = true
-                player.sendMessage(Component.text("${Message.PREFIX} §aYou added the world §e$worldName§a."))
+                player.sendMessage(Component.text("${Message.PREFIX}§aYou added the world §e$worldName§a."))
             } else if (subCommand.equals("removeWorld", true)) {
-                val worldName: String = args[1]
                 if (!knockbackConfig.isConfiguredWorld(worldName)) {
                     player.sendMessage(
                         Component.text(
-                            "${Message.PREFIX} §cThere isn't a world §e$worldName" +
+                            "${Message.PREFIX}§cThere isn't a world §e$worldName" +
                                     "§c configured"
                         )
                     )
@@ -127,7 +128,23 @@ class KnockbackFFACommand @Inject constructor(
                 }
 
                 knockbackConfig.removeWorld(worldName)
-                player.sendMessage(Component.text("${Message.PREFIX} §aYou removed the world §e$worldName§a."))
+                player.sendMessage(Component.text("${Message.PREFIX}§aYou removed the world §e$worldName§a."))
+            } else if (subCommand.equals("tp", true)
+                || subCommand.equals("teleport", true)
+            ) {
+                val world: World? = Bukkit.createWorld(WorldCreator(worldName))
+                if (world == null) {
+                    player.sendMessage(Component.text("${Message.PREFIX}§cCouldn't found world §e$worldName§c."))
+                    return true
+                }
+
+                player.teleport(world.spawnLocation)
+                player.sendMessage(
+                    Component.text(
+                        "${Message.PREFIX}§aYou've been teleported to " +
+                                "world §e$worldName§a."
+                    )
+                )
             }
         }
 

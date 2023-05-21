@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerItemDamageEvent
 
-class PlayerItemDamageListener : Listener {
+class ItemDurabilityDamageListener : Listener {
 
     @EventHandler
     fun onPlayerItemDamage(playerItemDamageEvent: PlayerItemDamageEvent) {

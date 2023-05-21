@@ -5,6 +5,7 @@ import de.will_smith_007.knockback_ffa.commands.KnockbackFFACommand
 import de.will_smith_007.knockback_ffa.dependency_injection.InjectionModule
 import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
 import de.will_smith_007.knockback_ffa.listener.*
+import de.will_smith_007.knockback_ffa.scheduler.WorldChangerScheduler
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.PluginCommand
@@ -26,16 +27,19 @@ class Main : JavaPlugin() {
             FallDamageListener(),
             EntitySpawnListener(),
             injector.getInstance(EntityDamageByEntityListener::class.java),
-            injector.getInstance(PlayerMoveListener::class.java),
+            injector.getInstance(PlayerMoveDeathListener::class.java),
             PlayerDropItemListener(),
-            PlayerFishListener(),
-            PlayerItemDamageListener()
+            GrapplingHookListener(),
+            ItemDurabilityDamageListener()
         )
+
+        injector.getInstance(WorldChangerScheduler::class.java).start()
 
         logger.info("Have fun playing Knockback-FFA!")
     }
 
     override fun onDisable() {
+        injector.getInstance(WorldChangerScheduler::class.java).stop()
         logger.info("Bye!")
     }
 
