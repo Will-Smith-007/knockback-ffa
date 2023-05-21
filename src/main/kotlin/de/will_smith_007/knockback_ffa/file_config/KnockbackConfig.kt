@@ -64,18 +64,18 @@ class KnockbackConfig @Inject constructor(
     }
 
     override fun addWorld(world: World) {
-        val worldList: List<String> = getWorlds()
+        val worldList: MutableList<String> = getWorlds()
 
-        worldList.plus(world.name)
+        worldList.add(world.name)
         yamlConfiguration.set("Maps", worldList)
 
         saveFile()
     }
 
     override fun removeWorld(worldName: String) {
-        val worldList: List<String> = getWorlds()
+        val worldList: MutableList<String> = getWorlds()
 
-        worldList.minus(worldName)
+        worldList.remove(worldName)
         yamlConfiguration.set("Maps", worldList)
         yamlConfiguration.set(worldName, null)
 
@@ -98,7 +98,7 @@ class KnockbackConfig @Inject constructor(
         saveFile()
     }
 
-    override fun getWorlds(): List<String> {
+    override fun getWorlds(): MutableList<String> {
         return yamlConfiguration.getStringList("Maps")
     }
 

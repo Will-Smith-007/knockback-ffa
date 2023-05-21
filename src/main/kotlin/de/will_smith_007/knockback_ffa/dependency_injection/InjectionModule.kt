@@ -4,6 +4,8 @@ import com.google.inject.AbstractModule
 import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
 import de.will_smith_007.knockback_ffa.file_config.interfaces.IDatabaseConfig
 import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.scoreboard.ScoreboardManager
+import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class InjectionModule(
@@ -14,5 +16,6 @@ class InjectionModule(
         bind(JavaPlugin::class.java).toInstance(javaPlugin)
         bind(IDatabaseConfig::class.java).to(KnockbackConfig::class.java)
         bind(IWorldConfig::class.java).to(KnockbackConfig::class.java)
+        bind(IScoreboardManager::class.java).to(ScoreboardManager::class.java)
     }
 }

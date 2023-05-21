@@ -2,19 +2,16 @@ package de.will_smith_007.knockback_ffa.scheduler
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
+import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
 import de.will_smith_007.knockback_ffa.game_assets.GameAssets
 import de.will_smith_007.knockback_ffa.game_data.GameData
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.World
-import org.bukkit.WorldCreator
+import de.will_smith_007.knockback_ffa.scheduler.interfaces.IScheduler
+import org.bukkit.*
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.concurrent.CompletableFuture
 
 @Singleton
 class WorldChangerScheduler @Inject constructor(
-    private val knockbackConfig: KnockbackConfig,
+    private val worldConfig: IWorldConfig,
     private val javaPlugin: JavaPlugin,
     private val gameAssets: GameAssets
 ) : IScheduler {
@@ -23,7 +20,7 @@ class WorldChangerScheduler @Inject constructor(
 
     override fun start() {
         taskID = bukkitScheduler.scheduleSyncRepeatingTask(javaPlugin, {
-            val worldList: List<String> = knockbackConfig.getWorlds()
+            val worldList: List<String> = worldConfig.getWorlds()
             if (worldList.isEmpty()) return@scheduleSyncRepeatingTask
 
             val gameData: GameData = gameAssets.gameData ?: return@scheduleSyncRepeatingTask
@@ -49,8 +46,16 @@ class WorldChangerScheduler @Inject constructor(
     private fun loadWorld(worldName: String) {
         val world: World = Bukkit.createWorld(WorldCreator(worldName))
             ?: return
-        val worldSpawnLocation: Location = knockbackConfig.getWorldSpawnLocation(worldName)
+        val worldSpawnLocation: Location = worldConfig.getWorldSpawnLocation(worldName)
             ?: return
+
+        world.time = 1200L
+        world.weatherDuration = 1200
+        world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false)
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
+        world.setGameRule(GameRule.DO_WEATHER_CYCLE, false)
+
         for (onlinePlayer in Bukkit.getOnlinePlayers()) {
             onlinePlayer.teleport(worldSpawnLocation)
         }

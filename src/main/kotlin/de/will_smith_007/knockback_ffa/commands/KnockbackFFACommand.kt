@@ -2,7 +2,7 @@ package de.will_smith_007.knockback_ffa.commands
 
 import com.google.inject.Inject
 import de.will_smith_007.knockback_ffa.enums.Message
-import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
+import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
 import net.kyori.adventure.text.Component
 import org.bukkit.*
 import org.bukkit.command.Command
@@ -11,7 +11,7 @@ import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Player
 
 class KnockbackFFACommand @Inject constructor(
-    private val knockbackConfig: KnockbackConfig
+    private val worldConfig: IWorldConfig
 ) : TabExecutor {
 
     override fun onTabComplete(
@@ -60,13 +60,13 @@ class KnockbackFFACommand @Inject constructor(
                 val world: World = player.world
                 val worldName: String = world.name
 
-                if (!knockbackConfig.isConfiguredWorld(worldName)) {
+                if (!worldConfig.isConfiguredWorld(worldName)) {
                     player.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
                     return true
                 }
 
                 val playerHeight: Int = player.location.blockY
-                knockbackConfig.setDeathHeight(worldName, playerHeight)
+                worldConfig.setDeathHeight(worldName, playerHeight)
                 player.sendMessage(
                     Component.text(
                         "${Message.PREFIX}§aYou've set the death height of " +
@@ -77,13 +77,13 @@ class KnockbackFFACommand @Inject constructor(
                 val world: World = player.world
                 val worldName: String = world.name
 
-                if (!knockbackConfig.isConfiguredWorld(worldName)) {
+                if (!worldConfig.isConfiguredWorld(worldName)) {
                     player.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
                     return true
                 }
 
                 val playerLocation: Location = player.location
-                knockbackConfig.setWorldSpawn(worldName, playerLocation)
+                worldConfig.setWorldSpawn(worldName, playerLocation)
                 player.sendMessage(
                     Component.text(
                         "${Message.PREFIX}§aYou've set the world spawn for §e" +
@@ -95,7 +95,7 @@ class KnockbackFFACommand @Inject constructor(
             val subCommand = args[0]
             val worldName: String = args[1]
             if (subCommand.equals("addWorld", true)) {
-                if (knockbackConfig.isConfiguredWorld(worldName)) {
+                if (worldConfig.isConfiguredWorld(worldName)) {
                     player.sendMessage(
                         Component.text(
                             "${Message.PREFIX}§cThe world §e$worldName §c" +
@@ -111,13 +111,13 @@ class KnockbackFFACommand @Inject constructor(
                     return true
                 }
 
-                knockbackConfig.addWorld(world)
+                worldConfig.addWorld(world)
                 player.teleport(world.spawnLocation)
                 player.gameMode = GameMode.CREATIVE
                 player.isFlying = true
                 player.sendMessage(Component.text("${Message.PREFIX}§aYou added the world §e$worldName§a."))
             } else if (subCommand.equals("removeWorld", true)) {
-                if (!knockbackConfig.isConfiguredWorld(worldName)) {
+                if (!worldConfig.isConfiguredWorld(worldName)) {
                     player.sendMessage(
                         Component.text(
                             "${Message.PREFIX}§cThere isn't a world §e$worldName" +
@@ -127,7 +127,7 @@ class KnockbackFFACommand @Inject constructor(
                     return true
                 }
 
-                knockbackConfig.removeWorld(worldName)
+                worldConfig.removeWorld(worldName)
                 player.sendMessage(Component.text("${Message.PREFIX}§aYou removed the world §e$worldName§a."))
             } else if (subCommand.equals("tp", true)
                 || subCommand.equals("teleport", true)

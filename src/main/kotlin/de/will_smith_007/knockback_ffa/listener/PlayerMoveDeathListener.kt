@@ -1,10 +1,10 @@
 package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
-import de.will_smith_007.knockback_ffa.game_data.GameData
 import de.will_smith_007.knockback_ffa.damage_data.DamageData
-import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
+import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
 import de.will_smith_007.knockback_ffa.game_assets.GameAssets
+import de.will_smith_007.knockback_ffa.game_data.GameData
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent
 
 class PlayerMoveDeathListener @Inject constructor(
     private val gameAssets: GameAssets,
-    private val knockbackConfig: KnockbackConfig
+    private val worldConfig: IWorldConfig
 ) : Listener {
 
     @EventHandler
@@ -28,12 +28,12 @@ class PlayerMoveDeathListener @Inject constructor(
 
         val world: World = gameData.world
         val worldName: String = world.name
-        val deathHeight: Int = knockbackConfig.getDeathHeight(worldName)
+        val deathHeight: Int = worldConfig.getDeathHeight(worldName)
         val playerLocation: Location = player.location
 
         if (playerLocation.blockY > deathHeight) return
 
-        val worldSpawnLocation: Location = knockbackConfig.getWorldSpawnLocation(worldName) ?: return
+        val worldSpawnLocation: Location = worldConfig.getWorldSpawnLocation(worldName) ?: return
         val lastDamageData: HashMap<Player, DamageData> = gameAssets.lastDamageData
         val damageData: DamageData? = lastDamageData[player]
         val currentTimeMillis: Long = System.currentTimeMillis()
