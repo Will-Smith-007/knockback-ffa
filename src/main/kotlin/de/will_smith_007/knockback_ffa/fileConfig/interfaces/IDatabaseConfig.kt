@@ -1,4 +1,4 @@
-package de.will_smith_007.knockback_ffa.file_config.interfaces
+package de.will_smith_007.knockback_ffa.fileConfig.interfaces
 
 interface IDatabaseConfig {
 

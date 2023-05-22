@@ -2,9 +2,9 @@ package de.will_smith_007.knockback_ffa.scheduler
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
-import de.will_smith_007.knockback_ffa.game_assets.GameAssets
-import de.will_smith_007.knockback_ffa.game_data.GameData
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
+import de.will_smith_007.knockback_ffa.gameData.GameData
 import de.will_smith_007.knockback_ffa.scheduler.interfaces.IScheduler
 import org.bukkit.*
 import org.bukkit.plugin.java.JavaPlugin
@@ -20,7 +20,7 @@ class WorldChangerScheduler @Inject constructor(
 
     override fun start() {
         taskID = bukkitScheduler.scheduleSyncRepeatingTask(javaPlugin, {
-            val worldList: List<String> = worldConfig.getWorlds()
+            val worldList: MutableList<String> = worldConfig.getWorlds()
             if (worldList.isEmpty()) return@scheduleSyncRepeatingTask
 
             val gameData: GameData = gameAssets.gameData ?: return@scheduleSyncRepeatingTask
@@ -30,7 +30,7 @@ class WorldChangerScheduler @Inject constructor(
                 gameAssets.gameData = GameData(world, System.currentTimeMillis())
                 return@scheduleSyncRepeatingTask
             }
-            worldList.minus(world.name)
+            worldList.remove(world.name)
             worldList.shuffled()
 
             val selectedWorldName: String = worldList[0]

@@ -1,9 +1,9 @@
-package de.will_smith_007.knockback_ffa.dependency_injection
+package de.will_smith_007.knockback_ffa.dependencyInjection
 
 import com.google.inject.AbstractModule
-import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IDatabaseConfig
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.KnockbackConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IDatabaseConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
 import de.will_smith_007.knockback_ffa.scoreboard.ScoreboardManager
 import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
 import org.bukkit.plugin.java.JavaPlugin

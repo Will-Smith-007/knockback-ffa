@@ -1,4 +1,4 @@
-package de.will_smith_007.knockback_ffa.damage_data
+package de.will_smith_007.knockback_ffa.damageData
 
 import org.bukkit.entity.Player
 

@@ -2,8 +2,8 @@ package de.will_smith_007.knockback_ffa
 
 import com.google.inject.Guice
 import de.will_smith_007.knockback_ffa.commands.KnockbackFFACommand
-import de.will_smith_007.knockback_ffa.dependency_injection.InjectionModule
-import de.will_smith_007.knockback_ffa.file_config.KnockbackConfig
+import de.will_smith_007.knockback_ffa.dependencyInjection.InjectionModule
+import de.will_smith_007.knockback_ffa.fileConfig.KnockbackConfig
 import de.will_smith_007.knockback_ffa.listener.*
 import de.will_smith_007.knockback_ffa.scheduler.ScoreboardUpdateScheduler
 import de.will_smith_007.knockback_ffa.scheduler.WorldChangerScheduler

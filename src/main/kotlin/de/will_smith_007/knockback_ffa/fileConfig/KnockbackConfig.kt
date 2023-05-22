@@ -1,9 +1,9 @@
-package de.will_smith_007.knockback_ffa.file_config
+package de.will_smith_007.knockback_ffa.fileConfig
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IDatabaseConfig
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IDatabaseConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World

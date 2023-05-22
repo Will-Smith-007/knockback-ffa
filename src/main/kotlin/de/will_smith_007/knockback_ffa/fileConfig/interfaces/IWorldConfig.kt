@@ -1,4 +1,4 @@
-package de.will_smith_007.knockback_ffa.file_config.interfaces
+package de.will_smith_007.knockback_ffa.fileConfig.interfaces
 
 import org.bukkit.Location
 import org.bukkit.World
@@ -13,7 +13,7 @@ interface IWorldConfig {
 
     fun setDeathHeight(worldName: String, deathHeight: Int)
 
-    fun getWorlds(): List<String>
+    fun getWorlds(): MutableList<String>
 
     fun isConfiguredWorld(worldName: String): Boolean
 

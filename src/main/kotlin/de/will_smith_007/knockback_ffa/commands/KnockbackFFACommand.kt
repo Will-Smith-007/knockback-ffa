@@ -2,7 +2,7 @@ package de.will_smith_007.knockback_ffa.commands
 
 import com.google.inject.Inject
 import de.will_smith_007.knockback_ffa.enums.Message
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
 import net.kyori.adventure.text.Component
 import org.bukkit.*
 import org.bukkit.command.Command
@@ -38,7 +38,7 @@ class KnockbackFFACommand @Inject constructor(
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) {
-            sender.sendMessage(Component.text("${Message.PREFIX}§cYou must be a player to execute this command."))
+            sender.sendMessage(Component.text("${Message.PREFIX}§cYou must be a sender to execute this command."))
             return true
         }
 
@@ -52,39 +52,37 @@ class KnockbackFFACommand @Inject constructor(
             return true
         }
 
-        val player: Player = sender
-
         if (args?.size == 1) {
             val subCommand = args[0]
             if (subCommand.equals("setDeath", true)) {
-                val world: World = player.world
+                val world: World = sender.world
                 val worldName: String = world.name
 
                 if (!worldConfig.isConfiguredWorld(worldName)) {
-                    player.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
+                    sender.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
                     return true
                 }
 
-                val playerHeight: Int = player.location.blockY
-                worldConfig.setDeathHeight(worldName, playerHeight)
-                player.sendMessage(
+                val senderHeight: Int = sender.location.blockY
+                worldConfig.setDeathHeight(worldName, senderHeight)
+                sender.sendMessage(
                     Component.text(
                         "${Message.PREFIX}§aYou've set the death height of " +
-                                "this world to §e$playerHeight§a."
+                                "this world to §e$senderHeight§a."
                     )
                 )
             } else if (subCommand.equals("setSpawn", true)) {
-                val world: World = player.world
+                val world: World = sender.world
                 val worldName: String = world.name
 
                 if (!worldConfig.isConfiguredWorld(worldName)) {
-                    player.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
+                    sender.sendMessage(Component.text("${Message.PREFIX}§cThis world isn't configured."))
                     return true
                 }
 
-                val playerLocation: Location = player.location
-                worldConfig.setWorldSpawn(worldName, playerLocation)
-                player.sendMessage(
+                val senderLocation: Location = sender.location
+                worldConfig.setWorldSpawn(worldName, senderLocation)
+                sender.sendMessage(
                     Component.text(
                         "${Message.PREFIX}§aYou've set the world spawn for §e" +
                                 "$worldName§a."
@@ -96,7 +94,7 @@ class KnockbackFFACommand @Inject constructor(
             val worldName: String = args[1]
             if (subCommand.equals("addWorld", true)) {
                 if (worldConfig.isConfiguredWorld(worldName)) {
-                    player.sendMessage(
+                    sender.sendMessage(
                         Component.text(
                             "${Message.PREFIX}§cThe world §e$worldName §c" +
                                     "already exists."
@@ -107,18 +105,18 @@ class KnockbackFFACommand @Inject constructor(
 
                 val world: World? = Bukkit.createWorld(WorldCreator(worldName))
                 if (world == null) {
-                    player.sendMessage(Component.text("${Message.PREFIX}§cCouldn't found world §e$worldName§c."))
+                    sender.sendMessage(Component.text("${Message.PREFIX}§cCouldn't found world §e$worldName§c."))
                     return true
                 }
 
                 worldConfig.addWorld(world)
-                player.teleport(world.spawnLocation)
-                player.gameMode = GameMode.CREATIVE
-                player.isFlying = true
-                player.sendMessage(Component.text("${Message.PREFIX}§aYou added the world §e$worldName§a."))
+                sender.teleport(world.spawnLocation)
+                sender.gameMode = GameMode.CREATIVE
+                sender.isFlying = true
+                sender.sendMessage(Component.text("${Message.PREFIX}§aYou added the world §e$worldName§a."))
             } else if (subCommand.equals("removeWorld", true)) {
                 if (!worldConfig.isConfiguredWorld(worldName)) {
-                    player.sendMessage(
+                    sender.sendMessage(
                         Component.text(
                             "${Message.PREFIX}§cThere isn't a world §e$worldName" +
                                     "§c configured"
@@ -128,18 +126,18 @@ class KnockbackFFACommand @Inject constructor(
                 }
 
                 worldConfig.removeWorld(worldName)
-                player.sendMessage(Component.text("${Message.PREFIX}§aYou removed the world §e$worldName§a."))
+                sender.sendMessage(Component.text("${Message.PREFIX}§aYou removed the world §e$worldName§a."))
             } else if (subCommand.equals("tp", true)
                 || subCommand.equals("teleport", true)
             ) {
                 val world: World? = Bukkit.createWorld(WorldCreator(worldName))
                 if (world == null) {
-                    player.sendMessage(Component.text("${Message.PREFIX}§cCouldn't found world §e$worldName§c."))
+                    sender.sendMessage(Component.text("${Message.PREFIX}§cCouldn't found world §e$worldName§c."))
                     return true
                 }
 
-                player.teleport(world.spawnLocation)
-                player.sendMessage(
+                sender.teleport(world.spawnLocation)
+                sender.sendMessage(
                     Component.text(
                         "${Message.PREFIX}§aYou've been teleported to " +
                                 "world §e$worldName§a."

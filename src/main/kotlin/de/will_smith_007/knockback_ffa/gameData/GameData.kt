@@ -1,4 +1,4 @@
-package de.will_smith_007.knockback_ffa.game_data
+package de.will_smith_007.knockback_ffa.gameData
 
 import org.bukkit.World
 

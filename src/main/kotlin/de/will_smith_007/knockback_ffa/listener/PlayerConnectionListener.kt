@@ -2,9 +2,9 @@ package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
 import de.will_smith_007.knockback_ffa.enums.Message
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
-import de.will_smith_007.knockback_ffa.game_assets.GameAssets
-import de.will_smith_007.knockback_ffa.game_data.GameData
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
+import de.will_smith_007.knockback_ffa.gameData.GameData
 import de.will_smith_007.knockback_ffa.kit.KitHandler
 import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
 import net.kyori.adventure.text.Component

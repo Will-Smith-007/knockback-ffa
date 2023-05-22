@@ -1,9 +1,9 @@
 package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
-import de.will_smith_007.knockback_ffa.damage_data.DamageData
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
-import de.will_smith_007.knockback_ffa.game_assets.GameAssets
+import de.will_smith_007.knockback_ffa.damageData.DamageData
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player

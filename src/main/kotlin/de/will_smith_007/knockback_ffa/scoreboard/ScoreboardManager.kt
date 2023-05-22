@@ -2,8 +2,8 @@ package de.will_smith_007.knockback_ffa.scoreboard
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.will_smith_007.knockback_ffa.game_assets.GameAssets
-import de.will_smith_007.knockback_ffa.game_data.GameData
+import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
+import de.will_smith_007.knockback_ffa.gameData.GameData
 import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor

@@ -1,10 +1,10 @@
 package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
-import de.will_smith_007.knockback_ffa.damage_data.DamageData
-import de.will_smith_007.knockback_ffa.file_config.interfaces.IWorldConfig
-import de.will_smith_007.knockback_ffa.game_assets.GameAssets
-import de.will_smith_007.knockback_ffa.game_data.GameData
+import de.will_smith_007.knockback_ffa.damageData.DamageData
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
+import de.will_smith_007.knockback_ffa.gameData.GameData
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
@@ -38,6 +38,7 @@ class PlayerMoveDeathListener @Inject constructor(
         val damageData: DamageData? = lastDamageData[player]
         val currentTimeMillis: Long = System.currentTimeMillis()
 
+        player.teleport(worldSpawnLocation)
         if (damageData == null || (currentTimeMillis - damageData.lastDamageMillis) > 5000) {
             player.showTitle(
                 Title.title(
@@ -45,6 +46,7 @@ class PlayerMoveDeathListener @Inject constructor(
                     Component.text(player.name, NamedTextColor.AQUA)
                 )
             )
+            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f)
         } else {
             val damagePlayer: Player = damageData.lastDamagePlayer
 
@@ -54,7 +56,7 @@ class PlayerMoveDeathListener @Inject constructor(
                     Component.text(damagePlayer.name, NamedTextColor.AQUA)
                 )
             )
-            player.playSound(playerLocation, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f)
+            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f)
 
             damagePlayer.showTitle(
                 Title.title(
@@ -64,7 +66,5 @@ class PlayerMoveDeathListener @Inject constructor(
             )
             damagePlayer.playSound(damagePlayer.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.0f)
         }
-
-        player.teleport(worldSpawnLocation)
     }
 }
