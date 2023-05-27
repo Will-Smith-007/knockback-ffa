@@ -7,3 +7,5 @@ author: Will_Smith_007
 commands:
   knockback:
     description: Set up your worlds.
+  stats:
+    description: Show your own stats.

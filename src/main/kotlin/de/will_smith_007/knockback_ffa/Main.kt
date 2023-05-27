@@ -2,6 +2,7 @@ package de.will_smith_007.knockback_ffa
 
 import com.google.inject.Guice
 import de.will_smith_007.knockback_ffa.commands.KnockbackFFACommand
+import de.will_smith_007.knockback_ffa.commands.StatsCommand
 import de.will_smith_007.knockback_ffa.dependencyInjection.InjectionModule
 import de.will_smith_007.knockback_ffa.fileConfig.KnockbackConfig
 import de.will_smith_007.knockback_ffa.listener.*
@@ -22,6 +23,7 @@ class Main : JavaPlugin() {
         injector.getInstance(KnockbackConfig::class.java)
 
         registerCommand("knockback", injector.getInstance(KnockbackFFACommand::class.java))
+        registerCommand("stats", injector.getInstance(StatsCommand::class.java))
 
         registerListeners(
             injector.getInstance(PlayerConnectionListener::class.java),
