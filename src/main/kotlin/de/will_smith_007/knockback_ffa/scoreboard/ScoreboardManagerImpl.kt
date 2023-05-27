@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import de.will_smith_007.knockback_ffa.gameData.GameData
-import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
+import de.will_smith_007.knockback_ffa.scoreboard.interfaces.ScoreboardManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
@@ -18,9 +18,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Singleton
-class ScoreboardManager @Inject constructor(
+class ScoreboardManagerImpl @Inject constructor(
     private val gameAssets: GameAssets
-) : IScoreboardManager {
+) : ScoreboardManager {
 
     private val defaultSchema = SimpleDateFormat("mm:ss")
 

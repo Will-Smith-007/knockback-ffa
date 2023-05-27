@@ -1,6 +1,6 @@
 package de.will_smith_007.knockback_ffa.sql.interfaces
 
-interface IDatabaseConnector {
+interface DatabaseConnector {
 
     fun connect()
 

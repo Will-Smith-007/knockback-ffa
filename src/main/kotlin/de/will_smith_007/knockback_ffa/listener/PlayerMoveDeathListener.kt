@@ -2,7 +2,7 @@ package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
 import de.will_smith_007.knockback_ffa.damageData.DamageData
-import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.WorldConfig
 import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import de.will_smith_007.knockback_ffa.gameData.GameData
 import net.kyori.adventure.text.Component
@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent
 
 class PlayerMoveDeathListener @Inject constructor(
     private val gameAssets: GameAssets,
-    private val worldConfig: IWorldConfig
+    private val worldConfig: WorldConfig
 ) : Listener {
 
     @EventHandler

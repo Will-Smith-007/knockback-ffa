@@ -2,16 +2,16 @@ package de.will_smith_007.knockback_ffa.scheduler
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.will_smith_007.knockback_ffa.scheduler.interfaces.IScheduler
-import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
+import de.will_smith_007.knockback_ffa.scheduler.interfaces.Scheduler
+import de.will_smith_007.knockback_ffa.scoreboard.interfaces.ScoreboardManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
 @Singleton
 class ScoreboardUpdateScheduler @Inject constructor(
     private val javaPlugin: JavaPlugin,
-    private val scoreboardManager: IScoreboardManager
-) : IScheduler {
+    private val scoreboardManager: ScoreboardManager
+) : Scheduler {
 
     private var taskID: Int = 0
 

@@ -2,8 +2,8 @@ package de.will_smith_007.knockback_ffa.fileConfig
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IDatabaseConfig
-import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.DatabaseConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.WorldConfig
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
@@ -16,7 +16,7 @@ import java.nio.file.Files
 @Singleton
 class KnockbackConfig @Inject constructor(
     javaPlugin: JavaPlugin
-) : IDatabaseConfig, IWorldConfig {
+) : DatabaseConfig, WorldConfig {
 
     private var yamlConfiguration: YamlConfiguration
     private var config: File
@@ -67,7 +67,7 @@ class KnockbackConfig @Inject constructor(
         val worldList: MutableList<String> = getWorlds()
 
         worldList.add(world.name)
-        yamlConfiguration.set("Maps", worldList)
+        yamlConfiguration["Maps"] = worldList
 
         saveFile()
     }
@@ -76,24 +76,24 @@ class KnockbackConfig @Inject constructor(
         val worldList: MutableList<String> = getWorlds()
 
         worldList.remove(worldName)
-        yamlConfiguration.set("Maps", worldList)
-        yamlConfiguration.set(worldName, null)
+        yamlConfiguration["Maps"] = worldList
+        yamlConfiguration[worldName] = null
 
         saveFile()
     }
 
     override fun setWorldSpawn(worldName: String, spawnLocation: Location) {
-        yamlConfiguration.set("$worldName.x", spawnLocation.x)
-        yamlConfiguration.set("$worldName.y", spawnLocation.y)
-        yamlConfiguration.set("$worldName.z", spawnLocation.z)
-        yamlConfiguration.set("$worldName.yaw", spawnLocation.yaw)
-        yamlConfiguration.set("$worldName.pitch", spawnLocation.pitch)
+        yamlConfiguration["$worldName.x"] = spawnLocation.x
+        yamlConfiguration["$worldName.y"] = spawnLocation.y
+        yamlConfiguration["$worldName.z"] = spawnLocation.z
+        yamlConfiguration["$worldName.yaw"] = spawnLocation.yaw
+        yamlConfiguration["$worldName.pitch"] = spawnLocation.pitch
 
         saveFile()
     }
 
     override fun setDeathHeight(worldName: String, deathHeight: Int) {
-        yamlConfiguration.set("$worldName.deathHeight", deathHeight)
+        yamlConfiguration["$worldName.deathHeight"] = deathHeight
 
         saveFile()
     }

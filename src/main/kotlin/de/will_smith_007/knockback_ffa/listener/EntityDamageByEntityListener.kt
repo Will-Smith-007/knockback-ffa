@@ -2,7 +2,7 @@ package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
 import de.will_smith_007.knockback_ffa.damageData.DamageData
-import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.WorldConfig
 import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import org.bukkit.Location
 import org.bukkit.World
@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 
 class EntityDamageByEntityListener @Inject constructor(
     private val gameAssets: GameAssets,
-    private val worldConfig: IWorldConfig
+    private val worldConfig: WorldConfig
 ): Listener {
 
     @EventHandler

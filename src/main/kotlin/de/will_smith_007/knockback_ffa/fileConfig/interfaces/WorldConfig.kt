@@ -3,7 +3,7 @@ package de.will_smith_007.knockback_ffa.fileConfig.interfaces
 import org.bukkit.Location
 import org.bukkit.World
 
-interface IWorldConfig {
+interface WorldConfig {
 
     fun addWorld(world: World)
 

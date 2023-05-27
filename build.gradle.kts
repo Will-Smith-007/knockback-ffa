@@ -32,6 +32,7 @@ dependencies {
     implementation("com.google.inject:guice:7.0.0")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.8")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.21")
 }
 
 tasks.test {

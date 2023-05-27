@@ -1,6 +1,6 @@
 package de.will_smith_007.knockback_ffa.fileConfig.interfaces
 
-interface IDatabaseConfig {
+interface DatabaseConfig {
 
     fun getSQLHost(): String?
 

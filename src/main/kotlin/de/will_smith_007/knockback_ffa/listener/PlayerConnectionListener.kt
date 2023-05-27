@@ -2,11 +2,11 @@ package de.will_smith_007.knockback_ffa.listener
 
 import com.google.inject.Inject
 import de.will_smith_007.knockback_ffa.enums.Message
-import de.will_smith_007.knockback_ffa.fileConfig.interfaces.IWorldConfig
+import de.will_smith_007.knockback_ffa.fileConfig.interfaces.WorldConfig
 import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import de.will_smith_007.knockback_ffa.gameData.GameData
 import de.will_smith_007.knockback_ffa.kit.KitHandler
-import de.will_smith_007.knockback_ffa.scoreboard.interfaces.IScoreboardManager
+import de.will_smith_007.knockback_ffa.scoreboard.interfaces.ScoreboardManager
 import net.kyori.adventure.text.Component
 import org.bukkit.*
 import org.bukkit.entity.Player
@@ -17,8 +17,8 @@ import org.bukkit.event.player.PlayerQuitEvent
 
 class PlayerConnectionListener @Inject constructor(
     private val kitHandler: KitHandler,
-    private val scoreboardManager: IScoreboardManager,
-    private val worldConfig: IWorldConfig,
+    private val scoreboardManager: ScoreboardManager,
+    private val worldConfig: WorldConfig,
     private val gameAssets: GameAssets
 ) : Listener {
 
