@@ -12,9 +12,9 @@ class HikariConfigurationHandlerImpl @Inject constructor(
     private val databaseConfig: DatabaseConfig
 ) : HikariConfigurationHandler {
 
-    override fun getHikariDataSource(): HikariDataSource? {
+    override fun getHikariDataSource(): HikariDataSource {
         val hikariConfig = HikariConfig()
-        val databaseName: String = databaseConfig.getSQLDatabaseName() ?: return null
+        val databaseName: String = databaseConfig.getSQLDatabaseName() ?: return HikariDataSource(hikariConfig)
 
         hikariConfig.jdbcUrl = "jdbc:mysql://${databaseConfig.getSQLHost()}:${databaseConfig.getSQLPort()}/" +
                 databaseName

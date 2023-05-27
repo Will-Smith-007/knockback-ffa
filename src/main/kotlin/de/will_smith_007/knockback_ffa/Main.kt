@@ -7,6 +7,7 @@ import de.will_smith_007.knockback_ffa.fileConfig.KnockbackConfig
 import de.will_smith_007.knockback_ffa.listener.*
 import de.will_smith_007.knockback_ffa.scheduler.ScoreboardUpdateScheduler
 import de.will_smith_007.knockback_ffa.scheduler.WorldChangerScheduler
+import de.will_smith_007.knockback_ffa.sql.interfaces.DatabaseConnector
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.PluginCommand
@@ -37,12 +38,16 @@ class Main : JavaPlugin() {
         injector.getInstance(WorldChangerScheduler::class.java).start()
         injector.getInstance(ScoreboardUpdateScheduler::class.java).start()
 
+        injector.getInstance(DatabaseConnector::class.java).connect()
+
         logger.info("Have fun playing Knockback-FFA!")
     }
 
     override fun onDisable() {
         injector.getInstance(WorldChangerScheduler::class.java).stop()
         injector.getInstance(ScoreboardUpdateScheduler::class.java).stop()
+
+        injector.getInstance(DatabaseConnector::class.java).closeConnection()
 
         logger.info("Bye!")
     }

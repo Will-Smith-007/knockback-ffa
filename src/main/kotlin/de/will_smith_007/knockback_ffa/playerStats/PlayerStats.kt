@@ -10,11 +10,11 @@ class PlayerStats(
     private val decimalFormat = DecimalFormat("0.#")
 
     fun addKill() {
-        kills + 1
+        kills += 1
     }
 
     fun addDeath() {
-        deaths + 1
+        deaths += 1
     }
 
     fun getKills(): Int {

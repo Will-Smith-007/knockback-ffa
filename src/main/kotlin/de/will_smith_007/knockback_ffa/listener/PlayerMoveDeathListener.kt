@@ -5,6 +5,7 @@ import de.will_smith_007.knockback_ffa.damageData.DamageData
 import de.will_smith_007.knockback_ffa.fileConfig.interfaces.WorldConfig
 import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import de.will_smith_007.knockback_ffa.gameData.GameData
+import de.will_smith_007.knockback_ffa.playerStats.PlayerStats
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
@@ -39,6 +40,8 @@ class PlayerMoveDeathListener @Inject constructor(
         val currentTimeMillis: Long = System.currentTimeMillis()
 
         player.teleport(worldSpawnLocation)
+
+        val playerStatsMap = gameAssets.playerStatsMap
         if (damageData == null || (currentTimeMillis - damageData.lastDamageMillis) > 5000) {
             player.showTitle(
                 Title.title(
@@ -47,6 +50,10 @@ class PlayerMoveDeathListener @Inject constructor(
                 )
             )
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f)
+
+            val uuid = player.uniqueId
+            val playerStats: PlayerStats = playerStatsMap[uuid] ?: return
+            playerStats.addDeath()
         } else {
             val damagePlayer: Player = damageData.lastDamagePlayer
 
@@ -65,6 +72,32 @@ class PlayerMoveDeathListener @Inject constructor(
                 )
             )
             damagePlayer.playSound(damagePlayer.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.0f)
+
+            handlePlayerStats(player, damagePlayer)
+        }
+    }
+
+    private fun handlePlayerStats(victimPlayer: Player, damagePlayer: Player) {
+        val playerStatsMap = gameAssets.playerStatsMap
+
+        val damageUuid = damagePlayer.uniqueId
+        val victimUuid = victimPlayer.uniqueId
+
+        var damagePlayerStats: PlayerStats? = playerStatsMap[damageUuid]
+        var victimPlayerStats: PlayerStats? = playerStatsMap[victimUuid]
+
+        if (damagePlayerStats == null) {
+            damagePlayerStats = PlayerStats(1, 0)
+            playerStatsMap[damageUuid] = damagePlayerStats
+        } else {
+            damagePlayerStats.addKill()
+        }
+
+        if (victimPlayerStats == null) {
+            victimPlayerStats = PlayerStats(0, 1)
+            playerStatsMap[victimUuid] = victimPlayerStats
+        } else {
+            victimPlayerStats.addDeath()
         }
     }
 }

@@ -1,6 +1,7 @@
 package de.will_smith_007.knockback_ffa.sql
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import de.will_smith_007.knockback_ffa.playerStats.PlayerStats
 import de.will_smith_007.knockback_ffa.sql.interfaces.DatabaseProvider
 import de.will_smith_007.knockback_ffa.sql.interfaces.DatabaseStats
@@ -8,6 +9,7 @@ import java.sql.ResultSet
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
+@Singleton
 class DatabaseStatsImpl @Inject constructor(
     private val databaseProvider: DatabaseProvider
 ) : DatabaseStats {

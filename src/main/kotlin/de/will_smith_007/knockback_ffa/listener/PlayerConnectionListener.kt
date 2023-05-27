@@ -6,7 +6,9 @@ import de.will_smith_007.knockback_ffa.fileConfig.interfaces.WorldConfig
 import de.will_smith_007.knockback_ffa.gameAssets.GameAssets
 import de.will_smith_007.knockback_ffa.gameData.GameData
 import de.will_smith_007.knockback_ffa.kit.KitHandler
+import de.will_smith_007.knockback_ffa.playerStats.PlayerStats
 import de.will_smith_007.knockback_ffa.scoreboard.interfaces.ScoreboardManager
+import de.will_smith_007.knockback_ffa.sql.interfaces.DatabaseStats
 import net.kyori.adventure.text.Component
 import org.bukkit.*
 import org.bukkit.entity.Player
@@ -19,7 +21,8 @@ class PlayerConnectionListener @Inject constructor(
     private val kitHandler: KitHandler,
     private val scoreboardManager: ScoreboardManager,
     private val worldConfig: WorldConfig,
-    private val gameAssets: GameAssets
+    private val gameAssets: GameAssets,
+    private val databaseStats: DatabaseStats
 ) : Listener {
 
     @EventHandler
@@ -40,6 +43,11 @@ class PlayerConnectionListener @Inject constructor(
         val worldSpawnLocation: Location = worldConfig.getWorldSpawnLocation(playedWorld.name) ?: return
 
         player.teleport(worldSpawnLocation)
+
+        val uuid = player.uniqueId
+        databaseStats.getStats(uuid).thenAccept {
+            gameAssets.playerStatsMap[uuid] = it
+        }
     }
 
     @EventHandler
@@ -51,6 +59,10 @@ class PlayerConnectionListener @Inject constructor(
             if (onlinePlayer.name == player.name) continue
             scoreboardManager.setTablist(onlinePlayer)
         }
+
+        val uuid = player.uniqueId
+        val playerStats: PlayerStats = gameAssets.playerStatsMap[uuid] ?: return
+        databaseStats.saveStats(uuid, playerStats)
     }
 
     private fun handleFirstWorldSelection(): World? {

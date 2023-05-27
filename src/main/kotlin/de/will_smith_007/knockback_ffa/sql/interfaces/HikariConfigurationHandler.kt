@@ -4,5 +4,5 @@ import com.zaxxer.hikari.HikariDataSource
 
 fun interface HikariConfigurationHandler {
 
-    fun getHikariDataSource(): HikariDataSource?
+    fun getHikariDataSource(): HikariDataSource
 }

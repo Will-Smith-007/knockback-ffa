@@ -52,7 +52,7 @@ class KnockbackConfig @Inject constructor(
     }
 
     override fun getSQLDatabaseName(): String? {
-        return yamlConfiguration.getString("sqlDatabaseName")
+        return yamlConfiguration.getString("sqlDatabase")
     }
 
     override fun getSQLUsername(): String? {
