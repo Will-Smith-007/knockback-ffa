@@ -13,6 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta
 @Singleton
 class KitHandler {
 
+    /**
+     * Adds all standard items for the player.
+     */
     fun setPlayerKit(player: Player) {
         val knockbackStick = ItemStack(Material.STICK)
         knockbackStick.editMeta { itemMeta: ItemMeta ->

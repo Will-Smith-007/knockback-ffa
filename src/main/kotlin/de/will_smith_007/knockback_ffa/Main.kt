@@ -54,6 +54,10 @@ class Main : JavaPlugin() {
         logger.info("Bye!")
     }
 
+    /**
+     * Registers all listeners in the specified array.
+     * @param listeners Listeners which should be registered.
+     */
     private fun registerListeners(vararg listeners: Listener) {
         val pluginManager = Bukkit.getPluginManager()
         for (listener in listeners) {
@@ -61,6 +65,11 @@ class Main : JavaPlugin() {
         }
     }
 
+    /**
+     * Registers the specified command.
+     * @param command Name of command which can be executed.
+     * @param commandExecutor Command class which implements the [CommandExecutor] interface.
+     */
     private fun registerCommand(command: String, commandExecutor: CommandExecutor) {
         val pluginCommand: PluginCommand = getCommand(command) ?: return
         pluginCommand.setExecutor(commandExecutor)
