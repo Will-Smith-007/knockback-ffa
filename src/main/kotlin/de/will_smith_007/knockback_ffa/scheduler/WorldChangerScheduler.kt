@@ -9,6 +9,9 @@ import de.will_smith_007.knockback_ffa.scheduler.interfaces.Scheduler
 import org.bukkit.*
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * This [Scheduler] has the responsibility to handle world changes after every 10 minutes.
+ */
 @Singleton
 class WorldChangerScheduler @Inject constructor(
     private val worldConfig: WorldConfig,
@@ -32,6 +35,7 @@ class WorldChangerScheduler @Inject constructor(
             worldList.remove(world.name)
             worldList.shuffled()
 
+            // Loads the selected world first and after teleporting the players, the previous played world unloads.
             val selectedWorldName: String = worldList[0]
             loadWorld(selectedWorldName)
             Bukkit.unloadWorld(world, false)
@@ -42,12 +46,17 @@ class WorldChangerScheduler @Inject constructor(
         bukkitScheduler.cancelTask(taskID)
     }
 
+    /**
+     * Loads the new selected world and teleports all players to this world.
+     * This sets also important game rules such as cancelling daylight cycle and weather cycle.
+     */
     private fun loadWorld(worldName: String) {
         val world: World = Bukkit.createWorld(WorldCreator(worldName))
             ?: return
         val worldSpawnLocation: Location = worldConfig.getWorldSpawnLocation(worldName)
             ?: return
 
+        // Sets time to day and clears the weather
         world.time = 1200L
         world.weatherDuration = 1200
         world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false)

@@ -43,6 +43,7 @@ class PlayerMoveDeathListener @Inject constructor(
 
         val playerStatsMap = gameAssets.playerStatsMap
         if (damageData == null || (currentTimeMillis - damageData.lastDamageMillis) > 5000) {
+            // Death handling if the last damage is more than 5 seconds ago.
             player.showTitle(
                 Title.title(
                     Component.text("✘ You died ✘", NamedTextColor.RED),
@@ -57,6 +58,7 @@ class PlayerMoveDeathListener @Inject constructor(
         } else {
             val damagePlayer: Player = damageData.lastDamagePlayer
 
+            // Player which was pushed from the world
             player.showTitle(
                 Title.title(
                     Component.text("✘ You died ✘", NamedTextColor.RED),
@@ -65,6 +67,7 @@ class PlayerMoveDeathListener @Inject constructor(
             )
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f)
 
+            // Player which pushed the victim player from the world
             damagePlayer.showTitle(
                 Title.title(
                     Component.text("✔ You killed ✔", NamedTextColor.GREEN),
@@ -77,6 +80,10 @@ class PlayerMoveDeathListener @Inject constructor(
         }
     }
 
+    /**
+     * Adds a death to the victim player and a kill to the last damage player.
+     * Note that this is not a database call! The data will be stored to the database if a player disconnects.
+     */
     private fun handlePlayerStats(victimPlayer: Player, damagePlayer: Player) {
         val playerStatsMap = gameAssets.playerStatsMap
 

@@ -8,7 +8,13 @@ interface Scheduler {
     val bukkitScheduler: BukkitScheduler
         get() = Bukkit.getScheduler()
 
+    /**
+     * Starts the scheduler.
+     */
     fun start()
 
+    /**
+     * Stops the scheduler.
+     */
     fun stop()
 }

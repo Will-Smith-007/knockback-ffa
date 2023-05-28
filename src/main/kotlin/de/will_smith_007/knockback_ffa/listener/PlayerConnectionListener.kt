@@ -44,6 +44,7 @@ class PlayerConnectionListener @Inject constructor(
 
         player.teleport(worldSpawnLocation)
 
+        // Stats loading from database async
         val uuid = player.uniqueId
         databaseStats.getStats(uuid).thenAccept {
             gameAssets.playerStatsMap[uuid] = it
@@ -60,11 +61,15 @@ class PlayerConnectionListener @Inject constructor(
             scoreboardManager.setTablist(onlinePlayer)
         }
 
+        // Stats saving to the database async
         val uuid = player.uniqueId
         val playerStats: PlayerStats = gameAssets.playerStatsMap[uuid] ?: return
         databaseStats.saveStats(uuid, playerStats)
     }
 
+    /**
+     * Handles the world selection if the first player joins after server start.
+     */
     private fun handleFirstWorldSelection(): World? {
         val worldList: List<String> = worldConfig.getWorlds()
         if (worldList.isEmpty()) return null

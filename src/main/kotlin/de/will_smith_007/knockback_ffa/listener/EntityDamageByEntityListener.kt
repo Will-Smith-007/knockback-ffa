@@ -11,10 +11,13 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 
+/**
+ * This [Listener] has the responsibility to save the last damage data.
+ */
 class EntityDamageByEntityListener @Inject constructor(
     private val gameAssets: GameAssets,
     private val worldConfig: WorldConfig
-): Listener {
+) : Listener {
 
     @EventHandler
     fun onEntityDamageByEntity(entityDamageByEntityEvent: EntityDamageByEntityEvent) {
